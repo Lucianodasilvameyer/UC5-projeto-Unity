@@ -28,8 +28,8 @@ public class Player : MonoBehaviour
     public MeshRenderer mesh; //ao criar uma variavel meshrenderer no script do player, aparecera no inspector o seu nome no caso "mesh", dai é só arrastar o object da hierarchy o qual quer usar o seu "meshrenderer" para o script na parte escrita "mesh"?sim.o mesh renderer é tanto a classe do mesh quanto a classe q se quer usar do plane?sim
 
 
-
-    public TextMeshProUGUI textoMoedas;
+    public TextMeshProUGUI textoamarelo; // aqui todas as variaveis aparecem no inspector
+    public TextMeshProUGUI textoazul;
     public TextMeshProUGUI textoHP;
 
     float smoothRotationVelocity;
@@ -64,7 +64,9 @@ public class Player : MonoBehaviour
 
 
         // speed = 2f;
-        textoMoedas.text = "Coins: " + coinCountAmarelo;
+        
+        textoamarelo.text = "Coins: " + coinCountAmarelo;
+        textoazul.text = "Coins: "+coinCountAzul; //o + é para o numero aparecer
         textoHP.text = "HP: " + hp;
 
 
@@ -175,10 +177,10 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)//o other vai ser o colisor do objeto q colidimos
     {
-        if (other.transform.CompareTag("Coin"))
-        {
-           
-            if(other.GetComponent<Coin>().eAzul == true) // é azul
+        if (other.transform.CompareTag("Coin")) // aqui é para ter certeza se a tag q colidiu é o coin
+        {                                         // o other vai ser sempre a colisão do outro objeto(não o player)
+
+            if (other.GetComponent<Coin>().eAzul == true) // é azul
             {
 
                 coinCountAzul++;
@@ -190,7 +192,8 @@ public class Player : MonoBehaviour
             
            
             hp++;
-            textoMoedas.text = "Coins: " + coinCountAmarelo;
+            textoazul.text = "Coins: " + coinCountAzul;
+            textoamarelo.text = "Coins: " + coinCountAmarelo;
             textoHP.text = "HP: " + hp;
 
             //chamamos função do game para atualizar a lista de coins
