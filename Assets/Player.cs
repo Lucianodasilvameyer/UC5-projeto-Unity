@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+
+    //parte diferente
     public float speed = 2f;
     public float jumpHeight = 5f;
     public int coinCountAmarelo = 0;
