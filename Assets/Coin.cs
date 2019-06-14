@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Coin : MonoBehaviour {
 
-    float rotationSpeed = 180;
+   public float rotationSpeed = 180;
 
     public bool eAzul;
 

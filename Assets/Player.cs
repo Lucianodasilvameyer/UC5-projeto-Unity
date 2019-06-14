@@ -9,6 +9,7 @@ public class Player : MonoBehaviour
     public float jumpHeight = 5f;
     public int coinCountAmarelo = 0;
     public int coinCountAzul;
+    public int nivelCasa = 0;
 
     public int hp = 10;
 
@@ -179,20 +180,28 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)//o other vai ser o colisor do objeto q colidimos
     {
-        if (other.transform.CompareTag("Coin")) // aqui é para ter certeza se a tag q colidiu é o coin
+        if (other.transform.CompareTag("Coin")) // aqui é para ter certeza se a tag q colidiu é o coin   //o (other.transform.CompareTag("Coin")) serve para saber se o outro objeto tem a tag coin
         {                                         // o other vai ser sempre a colisão do outro objeto(não o player)
 
-            if (other.GetComponent<Coin>().eAzul == true) // é azul
-            {
-
+            if (other.GetComponent<Coin>().eAzul == true) // o Get component esta direcionando para a classe coin do outro objeto, e verificando se variavel eAzul é true ou false
+            {                                                 //se a moeda pega for azul adcionamos +1 no contador de moedas azuis  //quando aparecer um ponto mais um nome depois dos parenteses, esta checando a variavel  
+                //moedaPrefab.GetComponent<Coin>() == false // neste caso sem o ponto e nome, verifica se tem o componente ou não   
+                                                              
                 coinCountAzul++;
             }
             else // é amarelo
             {
                 coinCountAmarelo++;
             }
-            
-           
+
+
+            if (coinCountAzul % 5 == 0)
+            {
+                nivelCasa++;
+
+                game_ref.SpawnarMoedasNoNivel(nivelCasa, game_ref.coinPrefabAzul);// o game_ref.coinPrefabAzul é para pegar a variavel q esta no game
+            }
+
             hp++;
             textoazul.text = "Coins: " + coinCountAzul;
             textoamarelo.text = "Coins: " + coinCountAmarelo;
