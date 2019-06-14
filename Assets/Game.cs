@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class Game : MonoBehaviour {
 
-
+    //parte diferente
     public GameObject coinPrefab;//aqui é para criar pelo codigo
 
     public GameObject inimigoPrefab;                             
