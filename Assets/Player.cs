@@ -8,7 +8,7 @@ public class Player : MonoBehaviour
     public float speed = 2f;
     public float jumpHeight = 5f;
     public int coinCountAmarelo = 0;
-    public int coinCountAzul;
+    public int coinCountAzul=0;
     public int nivelCasa = 0;
 
     public int hp = 10;
