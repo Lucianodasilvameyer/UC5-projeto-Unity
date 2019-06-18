@@ -34,6 +34,7 @@ public class Player : MonoBehaviour
     public TextMeshProUGUI textoamarelo; // aqui todas as variaveis aparecem no inspector
     public TextMeshProUGUI textoazul;
     public TextMeshProUGUI textoHP;
+    public TextMeshProUGUI textoGameover;
 
     float smoothRotationVelocity;
     [SerializeField]
@@ -84,7 +85,7 @@ public class Player : MonoBehaviour
         walkingRotating();
         //walkSideways();
 
-
+       
 
 
     }
@@ -176,9 +177,9 @@ public class Player : MonoBehaviour
         //aqui iremos mover nosso jogador pela distância que iremos percorrer
         transform.Translate(moveAmount); 
 
-    }
-
-    private void OnTriggerEnter(Collider other)//o other vai ser o colisor do objeto q colidimos
+    }                                                                                                    // o trigger existe em todos os colliders
+                                                                                                        //o trigger ligado é para o personagem atravessar a a malha e continuar caindo, se não iria parra no ar 
+    private void OnTriggerEnter(Collider other)//o other vai ser o colisor do objeto q colidimos   // aqui é para saber quando colidiu com o trigger, para saber se colidiu com a bala ou com o cubo que é o colisor de gameover ou com a moeda
     {
         if (other.transform.CompareTag("Coin")) // aqui é para ter certeza se a tag q colidiu é o coin   //o (other.transform.CompareTag("Coin")) serve para saber se o outro objeto tem a tag coin
         {                                         // o other vai ser sempre a colisão do outro objeto(não o player)
@@ -211,17 +212,46 @@ public class Player : MonoBehaviour
             game_ref.RemoveCoinFromList(other.gameObject);
             GameObject.Destroy(other.gameObject);
 
+        }else if (other.transform.CompareTag("Bullet"))
+        {
+            hp--;
+
+            if (hp <= 0)
+            {
+                textoGameover.text = "Game Over!";
+            }
+            textoHP.text = "HP: " + hp;
+
+            GameObject.Destroy(other.gameObject);
+        } else if (other.transform.CompareTag("Gameover"))
+        {
+            hp = 0;
+
+            if (hp <= 0)
+            {
+                textoGameover.text = "Game Over!";
+            }
+            textoHP.text = "HP: " + hp;
+
+            GameObject.Destroy(other.gameObject);
         }
+
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnCollisionEnter(Collision collision) //se o istrigger não estiver ligado
     {
         if (collision.transform.CompareTag("Enemy"))
         {
             hp--;
+
+            if (hp <= 0)
+            {
+                textoGameover.text = "Game Over!";
+            }
             textoHP.text = "HP: " + hp;
 
             GameObject.Destroy(collision.gameObject);
         }
+
     }
 }
