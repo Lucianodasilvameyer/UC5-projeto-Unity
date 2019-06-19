@@ -1,5 +1,10 @@
 ﻿using TMPro;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq; // algumas funcções adicionais
 using UnityEngine;
+using UnityEngine.SceneManagement;
+
 
 public class Player : MonoBehaviour
 {
@@ -212,7 +217,26 @@ public class Player : MonoBehaviour
             game_ref.RemoveCoinFromList(other.gameObject);
             GameObject.Destroy(other.gameObject);
 
-        }else if (other.transform.CompareTag("Bullet"))
+            if (game_ref.listCoins.Count == 80) //quando chegar em 80 moedas pegas vai começar
+            {
+
+                for (int i = 0; i < game_ref.quantityOfEnemies; i++)
+                {
+                    if (game_ref.spawnPointsMoedas.Any()) ; //aqui menciona se tiver qualquer elemento na list de spawn points, mas ela começa vazia? 
+                    {
+                        int lugar = Random.Range(0, game_ref.spawnPointsMoedas.Count - 1); //aqui começa a verificação no zero e vai até o 9, por isso o -1? 
+
+                    }
+
+
+                }
+
+
+
+            }
+
+        }
+        else if (other.transform.CompareTag("Bullet"))
         {
             hp--;
 

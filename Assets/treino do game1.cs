@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class treno : MonoBehaviour
@@ -15,44 +16,56 @@ public class treno : MonoBehaviour
     public List<List<Transform>> listDosSpawnPointsCasas = new List<List<Transform>>();//a lista de listas ja tem a localização dos pais e filhos, ja q eles foram todos criados na hierarchy?
 
     [SerializeField]
-    int QuantityOfEnemies = 5; //para q serve saber a quantidade de inimigos? a lista de inimigos não serve para isso?
+    int QuantityOfEnemies = 5; //esta variavel foi criada para spawnar 5 inimigos quando o personagem pegar uma quantidade x de moedas
 
-    void Start()//no void start só vai o que acontece uma vez no começo do jogo e o q seria? 
+    void Start()// aqui em baixo só acontece uma vez no começo do jogo, logo quando aperta start   
     {
-        foreach (GameObject spawnpoitnpai in GameObject.FindGameObjectsWithTag("spawnpointspai")) ; //aqui o iterador é o spawnpoitnpai?
-        {                                                                                            //neste foreach o spawnpoitnpai ganha a localização de todos os pais?  
-            List<Transform> listspawns = new List<Transform>();
+        foreach (GameObject spawnpoitnpai in GameObject.FindGameObjectsWithTag("spawnpointspai"))
+        {               
+                                                                                                     //aqui o iterador é o spawnpoitnpai?sim
+                                                                                                    //neste foreach o spawnpoitnpai ganha a localização de todos os pais?sim  
 
-            foreach (Transform filhos in spawnpoitnpai.transform); //como aqui ja se sabe a localização dos pais, ja se sabe tambem a dos filhos?
-            {                                                      // este foreach diz q para cada localização de filho em cada spawnpoitnpai q tem a localização dos pais sera adicionado 1 na listspawns?   
-                listspawns.Add(filhos); //então a listspawns ficara com todos os 100 filhos mas não os pais? 
+                                                                                                      //dentro do foreach o FindGameObjectsWithTag é uma função do gameobject q retorna um array com todos os objetos com essa tag 
+                                                                                                      //**aqui o GameObject.FindGameObjectsWithTag("spawnpointspai")) ao ser chamado em qualquer lugar sempre retorna um array com todos os objetos com esta tag
+                                                                                  
+
+            List<Transform> listspawns = new List<Transform>();                                       
+
+            foreach (Transform filhos in spawnpoitnpai.transform)  //aqui o foreach ja sabe aumaticamente q cada pai tera no maximo 5 filhos, por ja ter definido isto na hierarchy? sim
+            {                                    
+                                                                   //como aqui ja se sabe a localização dos pais, ja se sabe tambem a dos filhos?sim
+                                                                  // este foreach diz q para cada localização de filho em cada spawnpoitnpai q tem a localização dos pais sera adicionado 1 na listspawns?sim   
+
+                                                                    //**aqui a variavel.transform é uma função q retorna o array com todos os filhos(mas só pq é uma exceção do foreach)
+
+                listspawns.Add(filhos);  
             }                            
 
-            listDosSpawnPointsCasas.Add(listspawns);  //aqui mandara todos os filhos para a lista de listas?
+            listDosSpawnPointsCasas.Add(listspawns);  
         }
-        SpawnarMoedasNoNivel(0, CoinPrefabAzul); //este comando de spawnar é acionado sempre após de definir a quantidade de objetos q seram spawnados?  
-    }                                            //o zero em parenteses se refere ao nivel zero?
+
+        SpawnarMoedasNoNivel(0, CoinPrefabAzul);   
+    }                                            //o zero em parenteses se refere ao nivel zero?sim
     
     // Update is called once per frame
     void Update()
     {
-        if (listcoins.Count == 80) //por que só se vai entrar neste if se a quanttidade de moedas for 80?
-        {
-            print("poucas moedas"); //pq vai aparecer escrito poucas moedas na tela?
-
-            for (int i = 0, i < QuantityOfEnemies, i++)
-            {
-                if (spawnpoints.Any()); //aqui menciona se tiver qualquer elemento na list de spawn points, mas ela começa vazia? 
-                {
-                    int lugar = Random.Range(0, spawnpoints.count - 1); //aqui começa a verificação no zero e vai até o 9, por isso o -1? 
-
-                }
-
-
-            }      
-
-
-
-        }
+       
     }
+
+    public void SpawnarMoedasNoNivel(int n, GameObject moedaPrefab)//spawnar e criar é o mesmo
+    {
+        // caso o nivel passado seja uma posição que não existe na lista || (ou) o prefab passado não contém o componente Coin
+        if (n >= listDosSpawnPointsCasas.Count || n < 0 || moedaPrefab.GetComponent<Coin>() == false) return; //aqui o Getcomponent esta checando se a moeda prefab tem o componente coin
+                                                                                                              // o listDosSpawnPointsCasas.Count é a quantidade de niveis que a fase tem
+        for (int i = 0; i < listDosSpawnPointsCasas[n].Count; i++) //sempre q um array ou lista estiver com um indice dentro do colchetes[i] esta falando do elemento nesta possição q é o indice e não a lista em si
+        {
+            GameObject go = Instantiate(moedaPrefab, listDosSpawnPointsCasas[n][i].position, Quaternion.identity);//o Quaternion.identity é para o objeto manter a rotação q começou
+
+            listcoins.Add(go.GetComponent<Coin>());
+        }
+
+    }
+
+
 }

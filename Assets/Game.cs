@@ -17,16 +17,17 @@ public class Game : MonoBehaviour {                    //para deixar um prefab c
 
     public GameObject inimigoPrefab;                             
 
-    public List<Transform> spawnPoints = new List<Transform>();
+    public List<Transform> spawnPointsMoedas = new List<Transform>();
 
     public List<Coin> listCoins = new List<Coin>();
+    public List<Transform> spawnPointsInimigos = new List<Transform>();
     public List<Inimigo> listInimigos = new List<Inimigo>();
 
     public List<List<Transform>> listasSpawnPointsCasas = new List<List<Transform>>();//pq esta lista não aparece no inspector? ja q ela contem todas as listas spawnlists? 
 
     //quantidade de inimigos para spawnar
     [SerializeField]
-    int quantityOfEnemies = 5;
+    public int quantityOfEnemies = 5;
 
   
 
@@ -94,12 +95,12 @@ public class Game : MonoBehaviour {                    //para deixar um prefab c
             for(int i =0; i < quantityOfEnemies; i++)
             {
 
-                if (spawnPoints.Any()) // caso tenha algum elemento na lista
+                if (spawnPointsMoedas.Any()) // caso tenha algum elemento na lista
                 {
-                    int pos = Random.Range(0, spawnPoints.Count - 1);
-                    spawnEnemy(spawnPoints[pos].position);
+                    int pos = Random.Range(0, spawnPointsMoedas.Count - 1);
+                    spawnEnemy(spawnPointsMoedas[pos].position);
 
-                    spawnPoints.RemoveAt(pos);
+                    spawnPointsMoedas.RemoveAt(pos);
                 }
                 else break;
                 
