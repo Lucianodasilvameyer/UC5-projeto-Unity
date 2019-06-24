@@ -8,6 +8,7 @@ public class Inimigo : MonoBehaviour {
     public Transform target; // alvo para o inimigo seguir
 
     public float speed = 5f;
+    public int hp = 2;
 
     [SerializeField]
     private float timerMax; //tempo maximo do timer
@@ -19,7 +20,7 @@ public class Inimigo : MonoBehaviour {
     [SerializeField]
     GameObject bullet;
 
-    public List<List<Transform>> listaDosSpawnPointsDeInimigos = new List<List<Transform>>();
+    public Game game_ref;
 
     // Use this for initialization
     void Start () {
@@ -27,10 +28,12 @@ public class Inimigo : MonoBehaviour {
         timer = Time.time;
         //pegamos a referencia do jogador
         target = GameObject.FindGameObjectWithTag("Player").transform;
+        game_ref = GameObject.FindGameObjectWithTag("Game").GetComponent<Game>();//se o GetComponent não estiver dentro do if e estiver depois de um sinal de igual ele esta salvando(colocando a classe) em uma variavel
 
 
 
-        
+
+
 
 
     }
@@ -90,6 +93,18 @@ public class Inimigo : MonoBehaviour {
 
        
 
+    }
+
+    public void TomarDano(int dano)
+    {
+        hp -= dano;
+
+        print("Tomou dano");
+        if(hp <= 0)
+        {
+            game_ref.RemoverInimigoDaLista(gameObject);
+
+        }
     }
 
 

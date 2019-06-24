@@ -91,6 +91,7 @@ public class Game : MonoBehaviour {                    //para deixar um prefab c
             }
             listasDosInimigosPais.Add(listSpawnInimigos);
         }
+
         SpawnarInimigosNoNivel(0, inimigoPrefab);//pq este comando é colocado aqui logo apos colocar informação na lista de listas?
 
 
@@ -120,9 +121,9 @@ public class Game : MonoBehaviour {                    //para deixar um prefab c
             }
         }
 
-        if (listCoins.Count>=0) //na parte comentada do sor diz aqui caso não haja mais moedas na lista, significa que o player achou todas elas, mas eu entendo como o tamanho da listcoins é maior ou igual a zero?                 
+        if (listCoins.Count<=0) //na parte comentada do sor diz aqui caso não haja mais moedas na lista, significa que o player achou todas elas, mas eu entendo como o tamanho da listcoins é maior ou igual a zero?                 
         {
-            SceneManager.LoadScene(1);
+            //SceneManager.LoadScene(1);
         }
 
         
@@ -169,11 +170,11 @@ public class Game : MonoBehaviour {                    //para deixar um prefab c
         listInimigos.Add(go.GetComponent<Inimigo>());
 
     }
-    void SpawnarInimigosNoNivel(int n, GameObject inimigoPrefab)   //os GameObjects q spawnam tem q ter apenas o componente transform? 
+    void SpawnarInimigosNoNivel(int n, GameObject inimigoPrefab)   //os GameObjects q spawnam tem q ter apenas o componente transform? sim
     {
-        if (n >= listasDosInimigosPais.Count || n < 0 || inimigoPrefab.GetComponent<Inimigo>() == false) return;
+        if (n >= listasDosInimigosPais.Count || n < 0 || inimigoPrefab.GetComponent<Inimigo>() == false) return; //por que o tamanho dela é 10 mas vai até o 9, o n vai até o 9
 
-        for(int i=0;i<listasDosInimigosPais[n].Count;i++)
+        for(int i=0;i<listasDosInimigosPais[n].Count;i++) //o listasDosInimigosPais[n] representa o pai daquela possição e o count os seus filhos
         {
             GameObject ru = Instantiate(inimigoPrefab, listasDosInimigosPais[n][i].position, Quaternion.identity);
 
@@ -188,6 +189,7 @@ public class Game : MonoBehaviour {                    //para deixar um prefab c
         if(inimigo.GetComponent<Inimigo>())
         {
             listInimigos.Remove(inimigo.GetComponent<Inimigo>());
+            Destroy(inimigo);
         }
     }
 

@@ -22,17 +22,23 @@ public class Player : MonoBehaviour
     public float runSpeed = 8f;
     public float gravity = -12f;
 
+    public float timer;
+    public float timerMax = 5;
+
     [SerializeField]
     float velocityY;
 
     [SerializeField]
-    GameObject Sword;
+    Sword sword;
 
     [SerializeField]
     bool running = false;
 
     [SerializeField]
-    bool atirar = false;
+    bool atacando = false;
+    [SerializeField]
+    bool isOnCooldown = false;
+
 
 
     [SerializeField]
@@ -83,7 +89,7 @@ public class Player : MonoBehaviour
         textoazul.text = "Coins: "+coinCountAzul; //o + é para o numero aparecer
         textoHP.text = "HP: " + hp;
 
-
+       // timer = Time.time; //esse é o q esta sendo usado para marcar o cooldown de ataque
 
         //Instantiate(coinPrefab, new Vector3(2, 2, 2), Quaternion.identity);
     }
@@ -91,6 +97,32 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
+        if(Input.GetKeyDown(KeyCode.R) && isOnCooldown == false)
+        {
+            
+                                         //o primeiro é o tempo para o player usar a espada de novo
+                timer = Time.time;    //o timer esta sendo usado para guardar o instante de agora(o tempo de quando se apertou)(exemplo se eu usar a espada no instante 6 esse tempo sera salvo e só vai ser usada a partir do 11) //aqui é o timer do cooldown               
+
+                                       //o Time.time é o tempo corrido q só vai aumentando
+            sword.timer = Time.time;   //esse é o tempo q a espada fica viva      //o sword.timer é usado para guardar o valor do momento q usou a espada para saber quando apagar ela 
+            sword.gameObject.SetActive(true);
+                //
+
+                isOnCooldown = true;
+            
+     
+
+        }
+
+        
+                                                                      //assim como esta em baixo sera usado menos recursos computacionais e tera menos possibilidades do jogo travar
+        if (Time.time >= timer + timerMax && isOnCooldown == true)// aqui checa se já passou timerMax(5) segundos
+        {                                   //No Time.time  é o tempo da unity q representa sempre quanto tem po passou desde o inicio do jogo   
+                                            //o timer é o nosso tempo de jogo q serve para saber quando se atacou e esse tempo fica salvo
+            
+            isOnCooldown = false;//o cooldown só pode ser utilizado quando esta false
+            
+        }
 
         walkingRotating();
         //walkSideways();
@@ -187,18 +219,8 @@ public class Player : MonoBehaviour
         //aqui iremos mover nosso jogador pela distância que iremos percorrer
         transform.Translate(moveAmount);
     }
-    void shootAt(Transform target)
-    {
-        Vector3 instantiatePosition = transform.position + transform.forward * 1.5f;
-        //instantiatePosition.y = target.position.y;
 
-        GameObject go = Instantiate(Sword, instantiatePosition, Quaternion.identity);
-        //go.transform.LookAt(target);
-
-        atirar = (Input.GetKey(KeyCode.R));
-
-    }
-
+    
 
 
 
