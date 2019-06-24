@@ -14,25 +14,29 @@ public class Inimigo : MonoBehaviour {
     public float timer = 0; // timer em si
     bool goLeft = true;
 
+    
+
     [SerializeField]
     GameObject bullet;
 
+    public List<List<Transform>> listaDosSpawnPointsDeInimigos = new List<List<Transform>>();
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
 
         timer = Time.time;
         //pegamos a referencia do jogador
         target = GameObject.FindGameObjectWithTag("Player").transform;
-        
+
+
 
         
 
-        
-	}
-	
-	// Update is called once per frame
-	void Update () {
+
+    }
+
+    // Update is called once per frame
+    void Update () {
         transform.LookAt(target);
         //followTarget();
 
@@ -44,7 +48,7 @@ public class Inimigo : MonoBehaviour {
         }
 
         //moveSideways(goLeft);
-        
+
         
        
     }

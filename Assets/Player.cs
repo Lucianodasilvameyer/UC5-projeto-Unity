@@ -25,9 +25,14 @@ public class Player : MonoBehaviour
     [SerializeField]
     float velocityY;
 
+    [SerializeField]
+    GameObject Sword;
 
     [SerializeField]
     bool running = false;
+
+    [SerializeField]
+    bool atirar = false;
 
 
     [SerializeField]
@@ -180,10 +185,28 @@ public class Player : MonoBehaviour
         Vector3 moveAmount = velocity * Time.deltaTime;
 
         //aqui iremos mover nosso jogador pela distância que iremos percorrer
-        transform.Translate(moveAmount); 
+        transform.Translate(moveAmount);
+    }
+    void shootAt(Transform target)
+    {
+        Vector3 instantiatePosition = transform.position + transform.forward * 1.5f;
+        //instantiatePosition.y = target.position.y;
 
-    }                                                                                                    // o trigger existe em todos os colliders
-                                                                                                        //o trigger ligado é para o personagem atravessar a a malha e continuar caindo, se não iria parra no ar 
+        GameObject go = Instantiate(Sword, instantiatePosition, Quaternion.identity);
+        //go.transform.LookAt(target);
+
+        atirar = (Input.GetKey(KeyCode.R));
+
+    }
+
+
+
+
+
+
+
+    // o trigger existe em todos os colliders
+    //o trigger ligado é para o personagem atravessar a a malha e continuar caindo, se não iria parra no ar 
     private void OnTriggerEnter(Collider other)//o other vai ser o colisor do objeto q colidimos   // aqui é para saber quando colidiu com o trigger, para saber se colidiu com a bala ou com o cubo que é o colisor de gameover ou com a moeda
     {
         if (other.transform.CompareTag("Coin")) // aqui é para ter certeza se a tag q colidiu é o coin   //o (other.transform.CompareTag("Coin")) serve para saber se o outro objeto tem a tag coin
