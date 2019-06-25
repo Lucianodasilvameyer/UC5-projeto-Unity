@@ -98,16 +98,16 @@ public class Player : MonoBehaviour
     private void Update()
     {
         if(Input.GetKeyDown(KeyCode.R) && isOnCooldown == false)
-        {
+        {                                                              //o cooldown e o tempo de vida da espada são calculados ao mesmo tempo
             
                                          
-                timer = Time.time;    
+                timer = Time.time;  //aqui é para saber  e guardar o tempo q o cooldown começou   
                                        
-            sword.timer = Time.time;   
-            sword.gameObject.SetActive(true);
+            sword.timer = Time.time; //aqui é para salvar o timer q é o tempo inicial q usou a espada e para saber o momento q a espada sera destruida   
+            sword.gameObject.SetActive(true); // aqui é para a espada ser spawnada,  //sword. é para direcionar para o script da espada
                 
 
-                isOnCooldown = true;
+                isOnCooldown = true; //aqui quer dizer q não pode usar a espada até virar false neste caso é 5 segundos
 
 
                                             //o timer esta sendo usado para guardar o instante de agora(o tempo de quando se apertou)(exemplo se eu usar a espada no instante 6 esse tempo sera salvo e só vai ser usada a partir do 11) //aqui é o timer do cooldown               
@@ -122,10 +122,10 @@ public class Player : MonoBehaviour
         
                                                                       //assim como esta em baixo sera usado menos recursos computacionais e tera menos possibilidades do jogo travar
         if (Time.time >= timer + timerMax && isOnCooldown == true)// aqui checa se já passou timerMax(5) segundos
-        {                                   //No Time.time  é o tempo da unity q representa sempre quanto tem po passou desde o inicio do jogo   
-                                            //o timer é o nosso tempo de jogo q serve para saber quando se atacou e esse tempo fica salvo
-            
-            isOnCooldown = false;//o cooldown só pode ser utilizado quando esta false
+        {                                      
+                                            
+                                            
+            isOnCooldown = false;// aqui o cooldown é desligado e pode usar a espada
             
         }
 

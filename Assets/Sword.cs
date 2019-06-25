@@ -21,7 +21,7 @@ public class Sword : MonoBehaviour
         {                                  //aqui o > é para garantir q entre dentro if caso ocorra um atraso no compromisso?sim
 
            
-            gameObject.SetActive(false);
+            gameObject.SetActive(false); //aqui a espada é destruida
             
         }
 
@@ -39,9 +39,9 @@ public class Sword : MonoBehaviour
             //inimigoColidiu.TomarDano(dano);
 
             other.GetComponent<Inimigo>().TomarDano(dano);//neste caso o other é usado por q queremos lidar com o objeto q colidimos, 
-
-          
-        }
+              //aqui esta pegando o script inimigo do objeto q colidimos
+              // como se trata do outro inimigo tomar dano se usa o get component
+        }     //pq o q quer q tome dano seja o inimigo
     }
 
 }
