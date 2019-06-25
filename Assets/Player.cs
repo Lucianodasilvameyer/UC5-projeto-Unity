@@ -100,15 +100,20 @@ public class Player : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.R) && isOnCooldown == false)
         {
             
-                                         //o primeiro é o tempo para o player usar a espada de novo
-                timer = Time.time;    //o timer esta sendo usado para guardar o instante de agora(o tempo de quando se apertou)(exemplo se eu usar a espada no instante 6 esse tempo sera salvo e só vai ser usada a partir do 11) //aqui é o timer do cooldown               
-
-                                       //o Time.time é o tempo corrido q só vai aumentando
-            sword.timer = Time.time;   //esse é o tempo q a espada fica viva      //o sword.timer é usado para guardar o valor do momento q usou a espada para saber quando apagar ela 
+                                         
+                timer = Time.time;    
+                                       
+            sword.timer = Time.time;   
             sword.gameObject.SetActive(true);
-                //
+                
 
                 isOnCooldown = true;
+
+
+                                            //o timer esta sendo usado para guardar o instante de agora(o tempo de quando se apertou)(exemplo se eu usar a espada no instante 6 esse tempo sera salvo e só vai ser usada a partir do 11) //aqui é o timer do cooldown               
+
+                                       //o Time.time é o tempo corrido q só vai aumentando
+                                                  //o sword.timer é usado para guardar o valor do momento q usou a espada para saber quando apagar ela 
             
      
 
@@ -174,11 +179,11 @@ public class Player : MonoBehaviour
         float animationSpeedPercent = ((running) ? speed / runSpeed : speed / walkSpeed * 0.5f) * inputDir.magnitude;  // o animationSpeedPercent é uma função?, sendo q ele esta sendo chamado para atualizar o valor do speed percent?
 
 
-        animator.SetFloat("speedPercent", animationSpeedPercent, smoothSpeedTime, Time.deltaTime);// "speedPercent" serve para acessar a blend tree                                                   //o animationSpeedPercent é o valor que se quer na variavel float, o valor q se quer vem sempre depois do nome do parametro 
+        //animator.SetFloat("speedPercent", animationSpeedPercent, smoothSpeedTime, Time.deltaTime);// "speedPercent" serve para acessar a blend tree                                                   //o animationSpeedPercent é o valor que se quer na variavel float, o valor q se quer vem sempre depois do nome do parametro 
                                                                                                   //o que vem depois do nome do parametro é o valor q se quer passar ao parametro, e como esta dentro do update vai sempre sendo atualizado
-        animator.SetBool("isground", charController.isGrounded); //o isground faz parte  da propriedade do CharacterController  // quando se fala de uma propriedade se refere a classe
-        animator.SetFloat("velocityY", velocityY);
-        animator.SetBool("spacedown", Input.GetKeyDown(KeyCode.Space));                                                                        // o "SpeedPercent" é o nome do parametro, um parametro é uma variavel que a condição usa;     
+        //animator.SetBool("isground", charController.isGrounded); //o isground faz parte  da propriedade do CharacterController  // quando se fala de uma propriedade se refere a classe
+        //animator.SetFloat("velocityY", velocityY);
+        //animator.SetBool("spacedown", Input.GetKeyDown(KeyCode.Space));                                                                        // o "SpeedPercent" é o nome do parametro, um parametro é uma variavel que a condição usa;     
     }                                                                                                                                             //a condição é a regra 
                                                                                                                                                   //a transição é quando se troca de estados
     void Jump()

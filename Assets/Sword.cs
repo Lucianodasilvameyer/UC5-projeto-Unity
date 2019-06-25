@@ -6,7 +6,7 @@ public class Sword : MonoBehaviour
 {
     public int dano;
     public float timer;
-    public float timerMax = 2;
+    public float timerMax;  //este é o tempo de vida da espada
     // Start is called before the first frame update
     void Start()
     {
@@ -17,10 +17,10 @@ public class Sword : MonoBehaviour
     void Update()
     {
 
-        if (Time.time >= timer + timerMax)
-        {
+        if (Time.time >= timer + timerMax) // o time.time é só o relogio, o timer é o tempo inicial q ficou guardado e o timemax é o tempo de duração da espada, o timer + timerMax guardam o tempo exato para o compromisso 
+        {                                  //aqui o > é para garantir q entre dentro if caso ocorra um atraso no compromisso?sim
 
-            timer = Time.time;
+           
             gameObject.SetActive(false);
             
         }

@@ -25,7 +25,7 @@ public class Bullet : MonoBehaviour {
             {
                 if (child.name == "Camera Target")
                 {
-                    print("Achou");
+                    //print("Achou camera target");
                     target = child;
                     break;
                 }
