@@ -1,8 +1,8 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
-using System.Linq; // algumas funcções adicionais
+using System.Collections.Generic; // algumas funcções adicionais
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Linq;
 
 public class Game : MonoBehaviour {                    //para deixar um prefab com seu script, sem precisar ficar arrastando sempre o script para o gameobject na hierarchy, eu posso simplesmente arrastar o script uma vez para o objeto na hierarchy e depois arrasatar o objeto da hierarchy para os assets, assim ele ficaria direto sempre com os scripts? isso seria criar um prefab?   
 
@@ -29,6 +29,10 @@ public class Game : MonoBehaviour {                    //para deixar um prefab c
     //quantidade de inimigos para spawnar
     [SerializeField]
     public int quantityOfEnemies = 5;
+
+    [SerializeField]
+    List<GameObject> pais;
+
 
 
 
@@ -80,17 +84,22 @@ public class Game : MonoBehaviour {                    //para deixar um prefab c
         SpawnarMoedasNoNivel(0, coinPrefabAzul);
 
 
-        foreach (GameObject spawnpoitnsinimigos in GameObject.FindGameObjectsWithTag("SpawnPointPaiinimigos"))// se eu quiser q os inimigos sejam, criados aleatoriamente
-        {
-            List<Transform> listSpawnInimigos = new List<Transform>();
 
-            foreach (Transform inimigosfilhos in spawnpoitnsinimigos.transform)
+        pais = GameObject.FindGameObjectsWithTag("SpawnPointPaiinimigos").OrderBy(go => go.name).ToList();
+
+        foreach (GameObject spawnpoitnsinimigos in pais)
+        {
+            List<Transform> listSpawnInimigos = new List<Transform>();//esta lista fica com os 100 filhos e sem os pais 
+
+            foreach (Transform inimigosfilhos in spawnpoitnsinimigos.transform)//aqui monta um array só com os filhos? não os pais?
             {
 
                 listSpawnInimigos.Add(inimigosfilhos);
             }
-            listasDosInimigosPais.Add(listSpawnInimigos);
+            listasDosInimigosPais.Add(listSpawnInimigos);//a lista de listas ja vai estar com os filhos divididos
         }
+
+        
 
         SpawnarInimigosNoNivel(0, inimigoPrefab);//pq este comando é colocado aqui logo apos colocar informação na lista de listas?
 
@@ -102,29 +111,7 @@ public class Game : MonoBehaviour {                    //para deixar um prefab c
     // Update is called once per frame
     void Update() {
 
-        if (listCoins.Count == 80)
-        {
-            print("POUCAS MOEDAS");
-
-            for (int i = 0; i < quantityOfEnemies; i++) //esta parte não serve para criar inimigos?
-            {
-
-                if (spawnPointsMoedas.Any()) // caso tenha algum elemento na lista
-                {
-                    int pos = Random.Range(0, spawnPointsMoedas.Count - 1);
-                    spawnEnemy(spawnPointsMoedas[pos].position);
-
-                    spawnPointsMoedas.RemoveAt(pos);
-                }
-                else break;
-
-            }
-        }
-
-        if (listCoins.Count<=0) //na parte comentada do sor diz aqui caso não haja mais moedas na lista, significa que o player achou todas elas, mas eu entendo como o tamanho da listcoins é maior ou igual a zero?                 
-        {
-            //SceneManager.LoadScene(1);
-        }
+        
 
         
 
@@ -170,13 +157,20 @@ public class Game : MonoBehaviour {                    //para deixar um prefab c
         listInimigos.Add(go.GetComponent<Inimigo>());
 
     }
-    void SpawnarInimigosNoNivel(int n, GameObject inimigoPrefab)   //os GameObjects q spawnam tem q ter apenas o componente transform? sim
+     public void SpawnarInimigosNoNivel(int n, GameObject inimigoPrefab)   //os GameObjects q spawnam tem q ter apenas o componente transform? sim
     {
+        if (n != 0)
+            print("tamanho da lista dos pais " + listasDosInimigosPais.Count);
+
         if (n >= listasDosInimigosPais.Count || n < 0 || inimigoPrefab.GetComponent<Inimigo>() == false) return; //por que o tamanho dela é 10 mas vai até o 9, o n vai até o 9
 
-        for(int i=0;i<listasDosInimigosPais[n].Count;i++) //o listasDosInimigosPais[n] representa o pai daquela possição e o count os seus filhos
+       // print("tttttttttttt ");
+
+        for (int i=0;i<listasDosInimigosPais[n].Count;i++) //o listasDosInimigosPais[n] representa o pai daquela possição e o count os seus filhos
         {
             GameObject ru = Instantiate(inimigoPrefab, listasDosInimigosPais[n][i].position, Quaternion.identity);
+
+            ru.transform.parent = pais[n].transform;
 
             listInimigos.Add(ru.GetComponent<Inimigo>()); 
         }

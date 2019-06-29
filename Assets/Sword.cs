@@ -42,6 +42,6 @@ public class Sword : MonoBehaviour
               //aqui esta pegando o script inimigo do objeto q colidimos
               // como se trata do outro inimigo tomar dano se usa o get component
         }     //pq o q quer q tome dano seja o inimigo
-    }
+    }                                                       //o dano em parenteses se refere a quantidade de dano q é mostrada no inspector 
 
 }

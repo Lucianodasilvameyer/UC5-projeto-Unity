@@ -69,6 +69,8 @@ public class Player : MonoBehaviour
     [SerializeField]
     Animator animator;
 
+    int nivelInimigo=0;
+
     // Use this for initialization
     private void Start()
     {
@@ -254,11 +256,19 @@ public class Player : MonoBehaviour
             if (coinCountAzul % 5 == 0)
             {
                 nivelCasa++;
+                
 
                 game_ref.SpawnarMoedasNoNivel(nivelCasa, game_ref.coinPrefabAzul);// o game_ref.coinPrefabAzul é para pegar a variavel q esta no game
             }
-
-            hp++;
+            if((coinCountAzul+coinCountAmarelo) %5==0)
+            {
+                hp++;
+            }
+            if((coinCountAzul + coinCountAmarelo) % 10 == 0)
+            {
+                game_ref.SpawnarInimigosNoNivel(Random.Range(0, 9), game_ref.inimigoPrefab);
+            }    
+            
             textoazul.text = "Coins: " + coinCountAzul;
             textoamarelo.text = "Coins: " + coinCountAmarelo;
             textoHP.text = "HP: " + hp;
@@ -267,22 +277,9 @@ public class Player : MonoBehaviour
             game_ref.RemoveCoinFromList(other.gameObject);
             GameObject.Destroy(other.gameObject);
 
-            if (game_ref.listCoins.Count == 80) //quando chegar em 80 moedas pegas vai começar
+            if(game_ref.listCoins.Count<=0)
             {
-
-                for (int i = 0; i < game_ref.quantityOfEnemies; i++)
-                {
-                    if (game_ref.spawnPointsMoedas.Any()) ; //aqui menciona se tiver qualquer elemento na list de spawn points, mas ela começa vazia? 
-                    {
-                        int lugar = Random.Range(0, game_ref.spawnPointsMoedas.Count - 1); //aqui começa a verificação no zero e vai até o 9, por isso o -1? 
-
-                    }
-
-
-                }
-
-
-
+                textoGameover.text = "You win";
             }
 
         }
@@ -309,23 +306,60 @@ public class Player : MonoBehaviour
 
             GameObject.Destroy(other.gameObject);
         }
+         else if(other.CompareTag("spawnParaAtivarInimigos"))
+         {
+            print("apareceu");
+            nivelInimigo++;
+            game_ref.SpawnarInimigosNoNivel(nivelInimigo, game_ref.inimigoPrefab);
+            other.gameObject.SetActive(false);
+
+         }
 
     }
 
     private void OnCollisionEnter(Collision collision) //se o istrigger não estiver ligado
     {
-        if (collision.transform.CompareTag("Enemy"))
-        {
+        if (collision.transform.CompareTag("Enemy"))                 //o Ontriggerenter é para coisas q atravessam tipo a malha
+        {                                                            //OnCollisionEnter é par coisas q não atravessam
             hp--;
 
             if (hp <= 0)
-            {
+            {  
                 textoGameover.text = "Game Over!";
             }
             textoHP.text = "HP: " + hp;
 
             GameObject.Destroy(collision.gameObject);
+
+            if( coinCountAmarelo>coinCountAzul )
+            {
+                if(coinCountAmarelo>0)
+                    coinCountAmarelo--;
+
+               
+            }
+            else if(coinCountAmarelo==coinCountAzul)
+            {
+                if (coinCountAmarelo > 0)
+                    coinCountAmarelo--;
+                if (coinCountAzul > 0)
+                    coinCountAzul--;
+            }
+            else
+            {
+                if (coinCountAzul > 0)
+                    coinCountAzul--;
+
+            }
+
+           
+           
+           
         }
 
     }
+   
+
+
+    
 }
