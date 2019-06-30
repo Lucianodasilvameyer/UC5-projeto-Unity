@@ -45,3 +45,4 @@ public class Sword : MonoBehaviour
     }                                                       //o dano em parenteses se refere a quantidade de dano q é mostrada no inspector 
 
 }
+       
