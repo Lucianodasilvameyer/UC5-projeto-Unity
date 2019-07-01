@@ -15,6 +15,8 @@ public class Inimigo : MonoBehaviour {
     public float timer = 0; // timer em si
     bool goLeft = true;
 
+    public Transform posicaoBala;
+
     
 
     [SerializeField]
@@ -111,7 +113,7 @@ public class Inimigo : MonoBehaviour {
     //função para atirar num alvo
     void shootAt(Transform target)
     {
-        Vector3 instantiatePosition = transform.position + transform.forward * 1.5f;
+        Vector3 instantiatePosition = posicaoBala.position;
         //instantiatePosition.y = target.position.y;
 
         GameObject go =  Instantiate(bullet, instantiatePosition, Quaternion.identity);
