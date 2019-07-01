@@ -15,7 +15,7 @@ public class Item : MonoBehaviour, IDragHandler, IEndDragHandler //o IDragHandle
     public void OnEndDrag(PointerEventData eventData)
     {
         int t = -1;
-        Slot[] slots = FindObjectsOfType<Slot>(); //o q significa aqui a espressão importar?  //aqui esta procurando objetos do tipo slot a onde?
+        Slot[] slots = FindObjectsOfType<Slot>(); //o q significa aqui a espressão importar?  //aqui esta procurando objetos do tipo slot e salvando na variavel slots?esta parte é um array?
         for(int i=0; i<slots.Length; i++)   //o q é o slots.Length?
         {
             if(slots[i].selected==true)  //o [i]serve para representar a posição do objeto do tipo Slot? //o q quer dizer o slots[i].selected==true? 
@@ -26,7 +26,7 @@ public class Item : MonoBehaviour, IDragHandler, IEndDragHandler //o IDragHandle
 
 
         }   
-        if(t>=0) //pq só colocar o t aqui?
+        if(t>=0) //
         {
             transform.position = slots[i].transform.position; //?
             LastTransform = transform.position;
