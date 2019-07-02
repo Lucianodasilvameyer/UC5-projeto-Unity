@@ -6,7 +6,7 @@ using UnityEngine.EventSystems; //para q serve o UnityEngine.EventSystems?  //o 
 public class Item : MonoBehaviour, IDragHandler, IEndDragHandler //o IDragHandler e o IEndDragHandler servem para quando o player arrastar os itens do inventario? mas eles tb colocam os itens em outro lugar? 
 {
     private Vector3 LastTransform;
-    public int id;//id?
+    public int id;//id?é tipo o 
     public Slot inSlot;
     
    
